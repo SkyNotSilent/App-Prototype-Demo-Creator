@@ -1,0 +1,369 @@
+<!-- ========================================
+     导航栏组件代码片段
+     包含：顶部导航、底部标签栏、面包屑
+     ======================================== -->
+
+<!-- ==================== 1. 顶部导航栏 ==================== -->
+
+<!-- 简单顶部导航 -->
+<header class="bg-white shadow-sm px-4 py-3 flex justify-between items-center z-10">
+    <h1 class="text-xl font-bold text-gray-800">页面标题</h1>
+    <button class="text-gray-600 hover:text-primary">
+        <i class="fas fa-ellipsis-v"></i>
+    </button>
+</header>
+
+<!-- 带返回按钮的顶部导航 -->
+<header class="bg-white shadow-sm px-4 py-3 flex items-center z-10">
+    <button onclick="history.back()" class="text-gray-600 hover:text-primary mr-4">
+        <i class="fas fa-arrow-left text-xl"></i>
+    </button>
+    <h1 class="text-xl font-bold text-gray-800 flex-1">页面标题</h1>
+    <button class="text-gray-600 hover:text-primary">
+        <i class="fas fa-share-alt"></i>
+    </button>
+</header>
+
+<!-- 带搜索框的顶部导航 -->
+<header class="bg-white shadow-sm px-4 py-3 flex items-center space-x-3 z-10">
+    <button onclick="history.back()" class="text-gray-600 hover:text-primary">
+        <i class="fas fa-arrow-left text-xl"></i>
+    </button>
+    <div class="flex-1 relative">
+        <input
+            type="text"
+            placeholder="搜索..."
+            class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-primary"
+        >
+        <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+    </div>
+</header>
+
+<!-- 带多个操作按钮的顶部导航 -->
+<header class="bg-white shadow-sm px-4 py-3 flex items-center z-10">
+    <button onclick="history.back()" class="text-gray-600 hover:text-primary mr-4">
+        <i class="fas fa-arrow-left text-xl"></i>
+    </button>
+    <h1 class="text-xl font-bold text-gray-800 flex-1">页面标题</h1>
+    <div class="flex space-x-3">
+        <button class="text-gray-600 hover:text-primary">
+            <i class="fas fa-search text-xl"></i>
+        </button>
+        <button class="text-gray-600 hover:text-primary">
+            <i class="fas fa-filter text-xl"></i>
+        </button>
+        <button class="text-gray-600 hover:text-primary">
+            <i class="fas fa-ellipsis-v text-xl"></i>
+        </button>
+    </div>
+</header>
+
+<!-- 渐变背景顶部导航 -->
+<header class="bg-gradient-to-r from-blue-500 to-purple-600 shadow-lg px-4 py-3 flex items-center z-10">
+    <button onclick="history.back()" class="text-white hover:text-gray-200 mr-4">
+        <i class="fas fa-arrow-left text-xl"></i>
+    </button>
+    <h1 class="text-xl font-bold text-white flex-1">页面标题</h1>
+    <button class="text-white hover:text-gray-200">
+        <i class="fas fa-cog text-xl"></i>
+    </button>
+</header>
+
+<!-- ==================== 2. 底部标签栏 ==================== -->
+
+<!-- 4个标签的底部栏 -->
+<nav class="bg-white border-t border-gray-200 px-6 py-2 flex justify-around items-center">
+    <div class="flex flex-col items-center text-primary cursor-pointer">
+        <i class="fas fa-home text-xl mb-1"></i>
+        <span class="text-xs">首页</span>
+    </div>
+    <div class="flex flex-col items-center text-gray-400 hover:text-primary cursor-pointer">
+        <i class="fas fa-list text-xl mb-1"></i>
+        <span class="text-xs">列表</span>
+    </div>
+    <div class="flex flex-col items-center text-gray-400 hover:text-primary cursor-pointer">
+        <i class="fas fa-chart-bar text-xl mb-1"></i>
+        <span class="text-xs">统计</span>
+    </div>
+    <div class="flex flex-col items-center text-gray-400 hover:text-primary cursor-pointer">
+        <i class="fas fa-user text-xl mb-1"></i>
+        <span class="text-xs">我的</span>
+    </div>
+</nav>
+
+<!-- 5个标签的底部栏（带中间凸起按钮） -->
+<nav class="bg-white border-t border-gray-200 px-4 py-2 flex justify-around items-center relative">
+    <div class="flex flex-col items-center text-primary cursor-pointer">
+        <i class="fas fa-home text-xl mb-1"></i>
+        <span class="text-xs">首页</span>
+    </div>
+    <div class="flex flex-col items-center text-gray-400 hover:text-primary cursor-pointer">
+        <i class="fas fa-list text-xl mb-1"></i>
+        <span class="text-xs">列表</span>
+    </div>
+
+    <!-- 中间凸起按钮 -->
+    <div class="flex flex-col items-center cursor-pointer -mt-6">
+        <button class="w-14 h-14 bg-primary text-white rounded-full shadow-lg hover:bg-blue-600 flex items-center justify-center">
+            <i class="fas fa-plus text-xl"></i>
+        </button>
+    </div>
+
+    <div class="flex flex-col items-center text-gray-400 hover:text-primary cursor-pointer">
+        <i class="fas fa-chart-bar text-xl mb-1"></i>
+        <span class="text-xs">统计</span>
+    </div>
+    <div class="flex flex-col items-center text-gray-400 hover:text-primary cursor-pointer">
+        <i class="fas fa-user text-xl mb-1"></i>
+        <span class="text-xs">我的</span>
+    </div>
+</nav>
+
+<!-- ==================== 3. Vue 动态底部标签栏 ==================== -->
+
+<!--
+使用方法：
+1. 复制到 Vue 模板的底部
+2. 在 data 中设置 currentTab 变量
+3. 修改 tabs 数组来自定义标签
+-->
+
+<nav class="bg-white border-t border-gray-200 px-6 py-2 flex justify-around items-center">
+    <div
+        v-for="tab in tabs"
+        :key="tab.id"
+        @click="currentTab = tab.id"
+        :class="[
+            'flex flex-col items-center cursor-pointer',
+            currentTab === tab.id ? 'text-primary' : 'text-gray-400 hover:text-primary'
+        ]"
+    >
+        <i :class="[tab.icon, 'text-xl mb-1']"></i>
+        <span class="text-xs">{{ tab.label }}</span>
+    </div>
+</nav>
+
+<!--
+在 Vue 中添加以下代码：
+
+data: {
+    currentTab: 'home',
+    tabs: [
+        { id: 'home', label: '首页', icon: 'fas fa-home' },
+        { id: 'list', label: '列表', icon: 'fas fa-list' },
+        { id: 'chart', label: '统计', icon: 'fas fa-chart-bar' },
+        { id: 'profile', label: '我的', icon: 'fas fa-user' }
+    ]
+}
+
+methods: {
+    switchTab(tabId) {
+        this.currentTab = tabId;
+        // 可以在这里添加页面跳转逻辑
+    }
+}
+-->
+
+<!-- ==================== 4. 面包屑导航 ==================== -->
+
+<!-- 简单面包屑 -->
+<div class="px-4 py-2 bg-gray-50 text-sm">
+    <span class="text-gray-500">首页</span>
+    <i class="fas fa-chevron-right text-gray-400 mx-2 text-xs"></i>
+    <span class="text-gray-500">列表</span>
+    <i class="fas fa-chevron-right text-gray-400 mx-2 text-xs"></i>
+    <span class="text-primary">详情</span>
+</div>
+
+<!-- 可点击的面包屑 -->
+<div class="px-4 py-2 bg-gray-50 text-sm flex items-center">
+    <a href="home.html" class="text-gray-500 hover:text-primary">首页</a>
+    <i class="fas fa-chevron-right text-gray-400 mx-2 text-xs"></i>
+    <a href="list.html" class="text-gray-500 hover:text-primary">列表</a>
+    <i class="fas fa-chevron-right text-gray-400 mx-2 text-xs"></i>
+    <span class="text-primary font-medium">详情</span>
+</div>
+
+<!-- Vue 动态面包屑 -->
+<div class="px-4 py-2 bg-gray-50 text-sm flex items-center">
+    <template v-for="(crumb, index) in breadcrumbs">
+        <a
+            v-if="crumb.link"
+            :href="crumb.link"
+            class="text-gray-500 hover:text-primary"
+        >
+            {{ crumb.title }}
+        </a>
+        <span v-else class="text-primary font-medium">{{ crumb.title }}</span>
+        <i
+            v-if="index < breadcrumbs.length - 1"
+            class="fas fa-chevron-right text-gray-400 mx-2 text-xs"
+        ></i>
+    </template>
+</div>
+
+<!--
+在 Vue 中添加以下代码：
+
+data: {
+    breadcrumbs: [
+        { title: '首页', link: 'home.html' },
+        { title: '列表', link: 'list.html' },
+        { title: '详情', link: null }
+    ]
+}
+-->
+
+<!-- ==================== 5. 步骤导航 ==================== -->
+
+<!-- 水平步骤指示器 -->
+<div class="px-6 py-4 bg-white">
+    <div class="flex items-center justify-between">
+        <div class="flex flex-col items-center">
+            <div class="w-10 h-10 bg-primary text-white rounded-full flex items-center justify-center font-bold">
+                1
+            </div>
+            <span class="text-xs mt-2 text-primary font-medium">步骤一</span>
+        </div>
+        <div class="flex-1 h-1 bg-gray-300 mx-2"></div>
+        <div class="flex flex-col items-center">
+            <div class="w-10 h-10 bg-gray-300 text-white rounded-full flex items-center justify-center font-bold">
+                2
+            </div>
+            <span class="text-xs mt-2 text-gray-500">步骤二</span>
+        </div>
+        <div class="flex-1 h-1 bg-gray-300 mx-2"></div>
+        <div class="flex flex-col items-center">
+            <div class="w-10 h-10 bg-gray-300 text-white rounded-full flex items-center justify-center font-bold">
+                3
+            </div>
+            <span class="text-xs mt-2 text-gray-500">步骤三</span>
+        </div>
+    </div>
+</div>
+
+<!-- Vue 动态步骤导航 -->
+<div class="px-6 py-4 bg-white">
+    <div class="flex items-center justify-between">
+        <div
+            v-for="(step, index) in steps"
+            :key="index"
+            class="flex flex-col items-center"
+        >
+            <div
+                :class="[
+                    'w-10 h-10 rounded-full flex items-center justify-center font-bold',
+                    currentStep >= index + 1
+                        ? 'bg-primary text-white'
+                        : 'bg-gray-300 text-white'
+                ]"
+            >
+                {{ index + 1 }}
+            </div>
+            <span
+                :class="[
+                    'text-xs mt-2',
+                    currentStep >= index + 1 ? 'text-primary font-medium' : 'text-gray-500'
+                ]"
+            >
+                {{ step }}
+            </span>
+            <div
+                v-if="index < steps.length - 1"
+                :class="[
+                    'flex-1 h-1 mx-2',
+                    currentStep > index + 1 ? 'bg-primary' : 'bg-gray-300'
+                ]"
+            ></div>
+        </div>
+    </div>
+</div>
+
+<!--
+在 Vue 中添加以下代码：
+
+data: {
+    currentStep: 1,
+    steps: ['填写信息', '选择方案', '确认提交']
+}
+-->
+
+<!-- ==================== 6. 侧边栏导航（可选） ==================== -->
+
+<!-- 简单侧边栏 -->
+<div class="flex h-screen">
+    <!-- 侧边栏 -->
+    <aside class="w-64 bg-white border-r shadow-sm">
+        <div class="p-4 border-b">
+            <h2 class="font-bold text-lg">菜单</h2>
+        </div>
+        <nav class="p-2">
+            <a href="#" class="flex items-center px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-primary rounded">
+                <i class="fas fa-home mr-3"></i>
+                <span>首页</span>
+            </a>
+            <a href="#" class="flex items-center px-4 py-3 bg-blue-50 text-primary rounded">
+                <i class="fas fa-list mr-3"></i>
+                <span>列表</span>
+            </a>
+            <a href="#" class="flex items-center px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-primary rounded">
+                <i class="fas fa-cog mr-3"></i>
+                <span>设置</span>
+            </a>
+        </nav>
+    </aside>
+
+    <!-- 主内容区 -->
+    <main class="flex-1 overflow-y-auto">
+        <!-- 内容在这里 -->
+    </main>
+</div>
+
+<!-- ==================== 7. 下拉菜单导航 ==================== -->
+
+<!-- 顶部导航带下拉菜单 -->
+<header class="bg-white shadow-sm px-4 py-3 flex justify-between items-center z-10">
+    <h1 class="text-xl font-bold text-gray-800">页面标题</h1>
+    <div class="relative">
+        <button @click="showMenu = !showMenu" class="text-gray-600 hover:text-primary">
+            <i class="fas fa-ellipsis-v"></i>
+        </button>
+
+        <!-- 下拉菜单 -->
+        <div
+            v-if="showMenu"
+            class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border py-2 z-20"
+        >
+            <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-50">
+                <i class="fas fa-edit mr-2"></i>编辑
+            </a>
+            <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-50">
+                <i class="fas fa-share mr-2"></i>分享
+            </a>
+            <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-50">
+                <i class="fas fa-star mr-2"></i>收藏
+            </a>
+            <hr class="my-2">
+            <a href="#" class="block px-4 py-2 text-red-600 hover:bg-gray-50">
+                <i class="fas fa-trash mr-2"></i>删除
+            </a>
+        </div>
+    </div>
+</header>
+
+<!--
+在 Vue 中添加以下代码：
+
+data: {
+    showMenu: false
+},
+
+mounted() {
+    // 点击外部关闭菜单
+    document.addEventListener('click', (e) => {
+        if (!e.target.closest('.relative')) {
+            this.showMenu = false;
+        }
+    });
+}
+-->

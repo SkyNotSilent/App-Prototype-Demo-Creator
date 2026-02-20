@@ -1,0 +1,374 @@
+<!-- ========================================
+     卡片组件代码片段
+     包含：基础卡片、媒体卡片、交互卡片等
+     ======================================== -->
+
+<!-- ==================== 1. 基础卡片 ==================== -->
+
+<!-- 简单卡片 -->
+<div class="bg-white rounded-lg shadow p-4">
+    <h3 class="font-semibold text-gray-800 mb-2">卡片标题</h3>
+    <p class="text-sm text-gray-600">这是卡片的描述内容，可以是任意长度的文本。</p>
+</div>
+
+<!-- 带边框的卡片 -->
+<div class="bg-white rounded-lg border-2 border-gray-200 p-4">
+    <h3 class="font-semibold text-gray-800 mb-2">卡片标题</h3>
+    <p class="text-sm text-gray-600">这是卡片的描述内容。</p>
+</div>
+
+<!-- 悬浮效果卡片 -->
+<div class="bg-white rounded-lg shadow hover:shadow-lg transition-shadow p-4 cursor-pointer">
+    <h3 class="font-semibold text-gray-800 mb-2">悬浮卡片</h3>
+    <p class="text-sm text-gray-600">鼠标悬停时会显示更强的阴影效果。</p>
+</div>
+
+<!-- ==================== 2. 任务卡片 ==================== -->
+
+<!-- 基础任务卡片 -->
+<div class="bg-white rounded-lg shadow p-4">
+    <div class="flex items-start justify-between mb-2">
+        <h3 class="font-semibold text-gray-800 flex-1">完成项目报告</h3>
+        <span class="text-xs text-red-600 bg-red-100 px-2 py-1 rounded-full">高优先级</span>
+    </div>
+    <p class="text-sm text-gray-600 mb-3">需要在本周五之前完成项目进度报告的撰写。</p>
+    <div class="flex items-center justify-between text-xs text-gray-500">
+        <div class="flex items-center">
+            <i class="far fa-calendar mr-1"></i>
+            <span>2026-02-20</span>
+        </div>
+        <div class="flex items-center">
+            <i class="fas fa-folder mr-1"></i>
+            <span>工作</span>
+        </div>
+    </div>
+</div>
+
+<!-- 可点击任务卡片 -->
+<div class="bg-white rounded-lg shadow p-4 cursor-pointer hover:shadow-lg transition-all">
+    <div class="flex items-start">
+        <!-- 复选框 -->
+        <button
+            class="w-6 h-6 rounded-full border-2 border-gray-300 hover:border-green-500 flex items-center justify-center mr-3 flex-shrink-0"
+        >
+            <i class="fas fa-check text-xs text-transparent"></i>
+        </button>
+
+        <div class="flex-1">
+            <h3 class="font-semibold text-gray-800 mb-1">团队周会</h3>
+            <p class="text-sm text-gray-600 mb-2">讨论本周工作进度和下周计划安排。</p>
+            <div class="flex items-center space-x-3">
+                <span class="text-xs text-yellow-600 bg-yellow-100 px-2 py-1 rounded-full">中优先级</span>
+                <span class="text-xs text-gray-500">
+                    <i class="far fa-clock mr-1"></i>今天 14:00
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 已完成任务卡片 -->
+<div class="bg-white rounded-lg shadow p-4 opacity-60">
+    <div class="flex items-start">
+        <!-- 已选中复选框 -->
+        <div class="w-6 h-6 rounded-full bg-green-500 flex items-center justify-center mr-3 flex-shrink-0">
+            <i class="fas fa-check text-xs text-white"></i>
+        </div>
+
+        <div class="flex-1">
+            <h3 class="font-semibold text-gray-400 line-through mb-1">整理文档</h3>
+            <p class="text-sm text-gray-400 line-through">整理本周的技术文档和学习笔记。</p>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== 3. 用户卡片 ==================== -->
+
+<!-- 横向用户卡片 -->
+<div class="bg-white rounded-lg shadow p-4 flex items-center">
+    <img
+        src="https://via.placeholder.com/60"
+        alt="用户头像"
+        class="w-14 h-14 rounded-full mr-4"
+    >
+    <div class="flex-1">
+        <h3 class="font-semibold text-gray-800">张三</h3>
+        <p class="text-sm text-gray-600">产品经理</p>
+    </div>
+    <button class="px-4 py-2 bg-primary text-white rounded-lg text-sm hover:bg-blue-600">
+        关注
+    </button>
+</div>
+
+<!-- 带统计的用户卡片 -->
+<div class="bg-white rounded-lg shadow p-4">
+    <div class="flex items-center mb-4">
+        <img
+            src="https://via.placeholder.com/60"
+            alt="用户头像"
+            class="w-14 h-14 rounded-full mr-4"
+        >
+        <div>
+            <h3 class="font-semibold text-gray-800">李四</h3>
+            <p class="text-sm text-gray-600">@lisi</p>
+        </div>
+    </div>
+    <div class="flex justify-around text-center border-t pt-4">
+        <div>
+            <p class="font-bold text-gray-800">128</p>
+            <p class="text-xs text-gray-500">文章</p>
+        </div>
+        <div>
+            <p class="font-bold text-gray-800">1.2k</p>
+            <p class="text-xs text-gray-500">粉丝</p>
+        </div>
+        <div>
+            <p class="font-bold text-gray-800">56</p>
+            <p class="text-xs text-gray-500">关注</p>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== 4. 产品卡片 ==================== -->
+
+<!-- 商品卡片 -->
+<div class="bg-white rounded-lg shadow overflow-hidden">
+    <img
+        src="https://via.placeholder.com/300x200"
+        alt="商品图片"
+        class="w-full h-40 object-cover"
+    >
+    <div class="p-4">
+        <h3 class="font-semibold text-gray-800 mb-2">商品名称</h3>
+        <div class="flex items-center justify-between">
+            <p class="text-lg font-bold text-red-600">¥99.00</p>
+            <span class="text-xs text-gray-500 line-through">¥199.00</span>
+        </div>
+        <button class="w-full mt-3 py-2 bg-primary text-white rounded-lg hover:bg-blue-600">
+            加入购物车
+        </button>
+    </div>
+</div>
+
+<!-- 网格商品卡片 -->
+<div class="bg-white rounded-lg shadow-sm overflow-hidden">
+    <div class="relative">
+        <img
+            src="https://via.placeholder.com/200x200"
+            alt="商品"
+            class="w-full h-32 object-cover"
+        >
+        <span class="absolute top-2 left-2 bg-red-500 text-white text-xs px-2 py-1 rounded">
+            新品
+        </span>
+    </div>
+    <div class="p-3">
+        <h3 class="text-sm text-gray-800 mb-2 line-clamp-2">商品名称显示两行文字超出部分省略</h3>
+        <p class="text-base font-bold text-red-600">¥59.00</p>
+    </div>
+</div>
+
+<!-- ==================== 5. 统计卡片 ==================== -->
+
+<!-- 简单统计卡片 -->
+<div class="bg-white rounded-lg shadow p-6">
+    <div class="flex items-center justify-between mb-2">
+        <h3 class="text-sm text-gray-600">总销售额</h3>
+        <i class="fas fa-dollar-sign text-2xl text-green-500"></i>
+    </div>
+    <p class="text-3xl font-bold text-gray-800">¥12,450</p>
+    <p class="text-xs text-green-600 mt-2">
+        <i class="fas fa-arrow-up mr-1"></i>比上周增长 12%
+    </p>
+</div>
+
+<!-- 彩色统计卡片 -->
+<div class="bg-gradient-to-r from-blue-500 to-blue-600 rounded-lg shadow p-6 text-white">
+    <div class="flex items-center justify-between mb-2">
+        <h3 class="text-sm opacity-80">用户总数</h3>
+        <i class="fas fa-users text-2xl opacity-80"></i>
+    </div>
+    <p class="text-3xl font-bold">2,453</p>
+    <p class="text-xs mt-2 opacity-80">
+        <i class="fas fa-arrow-up mr-1"></i>比上月增长 8%
+    </p>
+</div>
+
+<!-- 3列统计网格 -->
+<div class="grid grid-cols-3 gap-4">
+    <div class="bg-white rounded-lg shadow p-4 text-center">
+        <i class="fas fa-eye text-2xl text-blue-500 mb-2"></i>
+        <p class="text-2xl font-bold text-gray-800">1,234</p>
+        <p class="text-xs text-gray-500">访问量</p>
+    </div>
+    <div class="bg-white rounded-lg shadow p-4 text-center">
+        <i class="fas fa-heart text-2xl text-red-500 mb-2"></i>
+        <p class="text-2xl font-bold text-gray-800">567</p>
+        <p class="text-xs text-gray-500">点赞数</p>
+    </div>
+    <div class="bg-white rounded-lg shadow p-4 text-center">
+        <i class="fas fa-comment text-2xl text-green-500 mb-2"></i>
+        <p class="text-2xl font-bold text-gray-800">89</p>
+        <p class="text-xs text-gray-500">评论数</p>
+    </div>
+</div>
+
+<!-- ==================== 6. 文章卡片 ==================== -->
+
+<!-- 基础文章卡片 -->
+<div class="bg-white rounded-lg shadow p-4">
+    <div class="flex mb-3">
+        <img
+            src="https://via.placeholder.com/60"
+            alt="作者头像"
+            class="w-10 h-10 rounded-full mr-3"
+        >
+        <div>
+            <p class="font-medium text-gray-800">作者名称</p>
+            <p class="text-xs text-gray-500">2026-02-19</p>
+        </div>
+    </div>
+    <h3 class="font-semibold text-gray-800 mb-2">文章标题</h3>
+    <p class="text-sm text-gray-600 mb-3 line-clamp-2">
+        这是文章的摘要内容，显示两行文字，超出部分会被省略...
+    </p>
+    <div class="flex items-center justify-between text-xs text-gray-500">
+        <div class="flex items-center space-x-4">
+            <span><i class="far fa-eye mr-1"></i>1.2k</span>
+            <span><i class="far fa-heart mr-1"></i>56</span>
+            <span><i class="far fa-comment mr-1"></i>12</span>
+        </div>
+        <button class="text-primary hover:underline">阅读全文</button>
+    </div>
+</div>
+
+<!-- 带图片的文章卡片 -->
+<div class="bg-white rounded-lg shadow overflow-hidden">
+    <img
+        src="https://via.placeholder.com/400x200"
+        alt="文章封面"
+        class="w-full h-40 object-cover"
+    >
+    <div class="p-4">
+        <h3 class="font-semibold text-gray-800 mb-2">文章标题</h3>
+        <p class="text-sm text-gray-600 mb-3">这是文章的简短描述。</p>
+        <div class="flex items-center justify-between text-xs text-gray-500">
+            <span>2026-02-19</span>
+            <span><i class="far fa-eye mr-1"></i>1.2k</span>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== 7. 消息卡片 ==================== -->
+
+<!-- 通知消息卡片 -->
+<div class="bg-white rounded-lg shadow p-4 flex items-start">
+    <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center mr-3 flex-shrink-0">
+        <i class="fas fa-bell text-blue-500"></i>
+    </div>
+    <div class="flex-1">
+        <h3 class="font-semibold text-gray-800 mb-1">系统通知</h3>
+        <p class="text-sm text-gray-600">您的账户已完成实名认证，感谢您的支持！</p>
+        <p class="text-xs text-gray-400 mt-2">5分钟前</p>
+    </div>
+</div>
+
+<!-- 聊天消息卡片 -->
+<div class="bg-white rounded-lg shadow p-4 flex items-center">
+    <div class="relative mr-3">
+        <img
+            src="https://via.placeholder.com/50"
+            alt="头像"
+            class="w-12 h-12 rounded-full"
+        >
+        <span class="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-white"></span>
+    </div>
+    <div class="flex-1">
+        <h3 class="font-semibold text-gray-800">王小明</h3>
+        <p class="text-sm text-gray-600 truncate">最新的消息内容会显示在这里...</p>
+    </div>
+    <div class="text-right">
+        <p class="text-xs text-gray-400">14:30</p>
+        <span class="inline-block mt-1 px-2 py-1 bg-red-500 text-white text-xs rounded-full">
+            3
+        </span>
+    </div>
+</div>
+
+<!-- ==================== 8. Vue 动态卡片列表 ==================== -->
+
+<!--
+使用方法：
+1. 复制到 Vue 模板中
+2. 在 data 中定义 items 数组
+3. 根据需要自定义卡片内容
+-->
+
+<div
+    v-for="item in items"
+    :key="item.id"
+    class="bg-white rounded-lg shadow p-4 mb-3"
+>
+    <h3 class="font-semibold text-gray-800 mb-2">{{ item.title }}</h3>
+    <p class="text-sm text-gray-600 mb-3">{{ item.description }}</p>
+    <div class="flex items-center justify-between text-xs text-gray-500">
+        <span>{{ item.date }}</span>
+        <button @click="handleAction(item.id)" class="text-primary hover:underline">
+            查看详情
+        </button>
+    </div>
+</div>
+
+<!--
+在 Vue 中添加以下代码：
+
+data: {
+    items: [
+        {
+            id: 1,
+            title: '项目一',
+            description: '这是项目一的描述',
+            date: '2026-02-19'
+        },
+        {
+            id: 2,
+            title: '项目二',
+            description: '这是项目二的描述',
+            date: '2026-02-18'
+        }
+    ]
+},
+
+methods: {
+    handleAction(id) {
+        alert(`查看项目 ${id}`);
+    }
+}
+-->
+
+<!-- ==================== 9. 空状态卡片 ==================== -->
+
+<!-- 无数据状态 -->
+<div class="bg-white rounded-lg shadow p-8 text-center">
+    <i class="fas fa-inbox text-6xl text-gray-300 mb-4"></i>
+    <p class="text-gray-500 mb-4">暂无数据</p>
+    <button class="px-6 py-2 bg-primary text-white rounded-lg hover:bg-blue-600">
+        添加内容
+    </button>
+</div>
+
+<!-- 搜索无结果 -->
+<div class="bg-white rounded-lg shadow p-8 text-center">
+    <i class="fas fa-search text-6xl text-gray-300 mb-4"></i>
+    <p class="text-gray-500 mb-2">未找到相关内容</p>
+    <p class="text-sm text-gray-400">请尝试其他关键词</p>
+</div>
+
+<!-- 网络错误 -->
+<div class="bg-white rounded-lg shadow p-8 text-center">
+    <i class="fas fa-wifi text-6xl text-gray-300 mb-4"></i>
+    <p class="text-gray-500 mb-4">网络连接失败</p>
+    <button class="px-6 py-2 bg-primary text-white rounded-lg hover:bg-blue-600">
+        重新加载
+    </button>
+</div>

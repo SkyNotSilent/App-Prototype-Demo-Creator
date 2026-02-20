@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{PROJECT_NAME}} - 原型预览</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <style>
+    body {
+      background: #111827; /* Gray 900 */
+      margin: 0;
+      padding: 40px 20px;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      color: #ffffff;
+    }
+    
+    .main-container {
+      max-width: 1600px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    
+    .header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    
+    .header h1 {
+      font-size: 48px;
+      font-weight: 700;
+      color: #3B82F6; /* Blue 500 */
+      margin-bottom: 12px;
+    }
+    
+    .header p {
+      font-size: 18px;
+      color: #9CA3AF;
+    }
+    
+    .device-mockup {
+      position: relative;
+      background: #1C1C1E;
+      border: 4px solid #333;
+      border-radius: 50px;
+      padding: 10px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+      width: 375px; /* iPhone width */
+      height: 812px; /* iPhone height */
+      margin: 0 auto;
+    }
+
+    .device-notch {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 120px;
+      height: 30px;
+      background: #000;
+      border-bottom-left-radius: 16px;
+      border-bottom-right-radius: 16px;
+      z-index: 20;
+    }
+
+    .device-screen {
+      background: #000;
+      border-radius: 40px;
+      height: 100%;
+      width: 100%;
+      overflow: hidden;
+      position: relative;
+    }
+    
+    .page-frame {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="main-container">
+    <div class="header">
+      <h1>{{PROJECT_NAME}} Prototypes</h1>
+      <p>{{PROJECT_DESCRIPTION}}</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-16">
+      
+      <!-- Page Item Template (Repeated for each page) -->
+      <!-- 
+      <div class="flex flex-col items-center">
+        <h2 class="text-xl font-bold mb-4 text-blue-400">Page Name</h2>
+        <div class="device-mockup transform scale-90">
+          <div class="device-notch"></div>
+          <div class="device-screen">
+            <iframe src="pages/home.html" class="page-frame"></iframe>
+          </div>
+        </div>
+      </div>
+      -->
+      
+      {{PAGES_GRID}}
+
+    </div>
+  </div>
+
+</body>
+</html>

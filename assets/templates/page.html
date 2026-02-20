@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>{{PAGE_TITLE}}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3B82F6', 
+                        secondary: '#10B981',
+                        dark: '#1C1C1E'
+                    },
+                    fontFamily: {
+                        sans: ['-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'Roboto', 'Helvetica', 'Arial', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #F3F4F6; /* Light gray bg, change if dark mode needed */
+            color: #1F2937;
+            -webkit-tap-highlight-color: transparent;
+        }
+        [v-cloak] { display: none; }
+        
+        /* Hide scrollbar */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="h-screen flex flex-col overflow-hidden">
+    <div id="app" v-cloak class="h-full flex flex-col relative">
+        
+        <!-- Header -->
+        <header class="px-4 py-3 bg-white shadow-sm flex justify-between items-center z-10">
+            <h1 class="text-lg font-bold">{{PAGE_TITLE}}</h1>
+        </header>
+
+        <!-- Main Content -->
+        <main class="flex-1 overflow-y-auto p-4 space-y-4">
+            <!-- Content goes here -->
+            <div class="p-4 bg-white rounded-lg shadow">
+                <p>Content Area</p>
+            </div>
+        </main>
+
+        <!-- Tab Bar (Optional) -->
+        <!--
+        <nav class="bg-white border-t border-gray-200 px-6 py-2 flex justify-between items-center">
+            <div class="flex flex-col items-center text-blue-500">
+                <i class="fas fa-home text-xl mb-1"></i>
+                <span class="text-xs">Home</span>
+            </div>
+            <div class="flex flex-col items-center text-gray-400">
+                <i class="fas fa-user text-xl mb-1"></i>
+                <span class="text-xs">Profile</span>
+            </div>
+        </nav>
+        -->
+
+    </div>
+
+    <!-- Local Vue 2 -->
+    <script src="../assets/js/vue.js"></script>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                message: 'Hello Vue!'
+            },
+            methods: {
+                
+            },
+            mounted() {
+                
+            }
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>任务列表 - TaskFlow</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3B82F6',
+                        secondary: '#10B981',
+                        dark: '#1C1C1E'
+                    },
+                    fontFamily: {
+                        sans: ['-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'Roboto', 'Helvetica', 'Arial', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #F3F4F6;
+        }
+        [v-cloak] { display: none; }
+
+        /* 隐藏滚动条 */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        /* 任务卡片动画 */
+        .task-card {
+            transition: all 0.3s ease;
+        }
+        .task-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+        }
+
+        /* 标签样式 */
+        .tag {
+            @apply px-2 py-1 text-xs rounded-full;
+        }
+    </style>
+</head>
+<body class="h-screen flex flex-col overflow-hidden">
+    <div id="app" v-cloak class="h-full flex flex-col">
+
+        <!-- 顶部导航栏 -->
+        <header class="bg-white shadow-sm px-4 py-3 flex justify-between items-center z-10">
+            <h1 class="text-xl font-bold text-gray-800">任务列表</h1>
+            <div class="flex space-x-3">
+                <button @click="showSearch = !showSearch" class="text-gray-600 hover:text-primary">
+                    <i class="fas fa-search text-xl"></i>
+                </button>
+                <button @click="showFilter = !showFilter" class="text-gray-600 hover:text-primary">
+                    <i class="fas fa-filter text-xl"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- 搜索栏 -->
+        <div v-if="showSearch" class="bg-white px-4 py-3 border-b">
+            <div class="relative">
+                <input
+                    v-model="searchQuery"
+                    type="text"
+                    placeholder="搜索任务..."
+                    class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-primary"
+                >
+                <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+            </div>
+        </div>
+
+        <!-- 筛选器 -->
+        <div v-if="showFilter" class="bg-white px-4 py-3 border-b space-y-3">
+            <!-- 状态筛选 -->
+            <div>
+                <label class="text-sm font-medium text-gray-700 mb-2 block">状态</label>
+                <div class="flex space-x-2">
+                    <button
+                        v-for="status in statusOptions"
+                        :key="status.value"
+                        @click="filter.status = status.value"
+                        :class="[
+                            'px-3 py-1 rounded-full text-sm transition-all',
+                            filter.status === status.value
+                                ? 'bg-primary text-white'
+                                : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                        ]"
+                    >
+                        {{ status.label }}
+                    </button>
+                </div>
+            </div>
+
+            <!-- 优先级筛选 -->
+            <div>
+                <label class="text-sm font-medium text-gray-700 mb-2 block">优先级</label>
+                <div class="flex space-x-2">
+                    <button
+                        v-for="priority in priorityOptions"
+                        :key="priority.value"
+                        @click="filter.priority = priority.value"
+                        :class="[
+                            'px-3 py-1 rounded-full text-sm transition-all',
+                            filter.priority === priority.value
+                                ? 'bg-primary text-white'
+                                : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                        ]"
+                    >
+                        {{ priority.label }}
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 任务统计 -->
+        <div class="bg-white px-4 py-3 border-b">
+            <div class="flex justify-around text-center">
+                <div>
+                    <p class="text-2xl font-bold text-primary">{{ taskStats.total }}</p>
+                    <p class="text-xs text-gray-500">全部任务</p>
+                </div>
+                <div>
+                    <p class="text-2xl font-bold text-yellow-500">{{ taskStats.todo }}</p>
+                    <p class="text-xs text-gray-500">待办</p>
+                </div>
+                <div>
+                    <p class="text-2xl font-bold text-green-500">{{ taskStats.completed }}</p>
+                    <p class="text-xs text-gray-500">已完成</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 任务列表 -->
+        <main class="flex-1 overflow-y-auto no-scrollbar p-4 space-y-3">
+            <!-- 空状态 -->
+            <div v-if="filteredTasks.length === 0" class="text-center py-20">
+                <i class="fas fa-inbox text-6xl text-gray-300 mb-4"></i>
+                <p class="text-gray-500">暂无任务</p>
+                <button
+                    @click="addNewTask"
+                    class="mt-4 px-6 py-2 bg-primary text-white rounded-lg hover:bg-blue-600"
+                >
+                    添加任务
+                </button>
+            </div>
+
+            <!-- 任务卡片列表 -->
+            <div
+                v-for="task in filteredTasks"
+                :key="task.id"
+                @click="viewTask(task.id)"
+                class="task-card bg-white rounded-lg shadow p-4 cursor-pointer"
+            >
+                <!-- 任务头部 -->
+                <div class="flex justify-between items-start mb-2">
+                    <div class="flex-1">
+                        <h3 class="font-semibold text-gray-800" :class="{ 'line-through text-gray-400': task.status === 'completed' }">
+                            {{ task.title }}
+                        </h3>
+                        <p v-if="task.description" class="text-sm text-gray-500 mt-1 line-clamp-2">
+                            {{ task.description }}
+                        </p>
+                    </div>
+                    <button
+                        @click.stop="toggleComplete(task)"
+                        :class="[
+                            'w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all',
+                            task.status === 'completed'
+                                ? 'bg-green-500 border-green-500 text-white'
+                                : 'border-gray-300 hover:border-green-500'
+                        ]"
+                    >
+                        <i v-if="task.status === 'completed'" class="fas fa-check text-xs"></i>
+                    </button>
+                </div>
+
+                <!-- 任务标签 -->
+                <div class="flex items-center space-x-2 mb-2">
+                    <!-- 优先级标签 -->
+                    <span
+                        :class="[
+                            'tag',
+                            task.priority === 'high' ? 'bg-red-100 text-red-600' :
+                            task.priority === 'medium' ? 'bg-yellow-100 text-yellow-600' :
+                            'bg-gray-100 text-gray-600'
+                        ]"
+                    >
+                        {{ getPriorityLabel(task.priority) }}
+                    </span>
+
+                    <!-- 分类标签 -->
+                    <span class="tag bg-blue-100 text-blue-600">
+                        <i :class="getCategoryIcon(task.category)" class="mr-1"></i>
+                        {{ task.category }}
+                    </span>
+                </div>
+
+                <!-- 任务底部信息 -->
+                <div class="flex justify-between items-center text-xs text-gray-500">
+                    <div class="flex items-center">
+                        <i class="far fa-calendar mr-1"></i>
+                        <span>{{ formatDate(task.dueDate) }}</span>
+                    </div>
+                    <div class="flex items-center">
+                        <i class="far fa-clock mr-1"></i>
+                        <span>{{ formatTime(task.createdAt) }}</span>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- 悬浮添加按钮 -->
+        <button
+            @click="addNewTask"
+            class="fixed bottom-20 right-6 w-14 h-14 bg-primary text-white rounded-full shadow-lg hover:bg-blue-600 transition-all flex items-center justify-center z-20"
+        >
+            <i class="fas fa-plus text-xl"></i>
+        </button>
+
+        <!-- 底部标签栏 -->
+        <nav class="bg-white border-t border-gray-200 px-6 py-2 flex justify-around items-center">
+            <div class="flex flex-col items-center text-gray-400 hover:text-primary cursor-pointer">
+                <i class="fas fa-home text-xl mb-1"></i>
+                <span class="text-xs">首页</span>
+            </div>
+            <div class="flex flex-col items-center text-primary">
+                <i class="fas fa-list text-xl mb-1"></i>
+                <span class="text-xs">列表</span>
+            </div>
+            <div class="flex flex-col items-center text-gray-400 hover:text-primary cursor-pointer">
+                <i class="fas fa-chart-bar text-xl mb-1"></i>
+                <span class="text-xs">统计</span>
+            </div>
+            <div class="flex flex-col items-center text-gray-400 hover:text-primary cursor-pointer">
+                <i class="fas fa-user text-xl mb-1"></i>
+                <span class="text-xs">我的</span>
+            </div>
+        </nav>
+
+    </div>
+
+    <!-- Local Vue 2 -->
+    <script src="../assets/js/vue.js"></script>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                tasks: [],
+                searchQuery: '',
+                showSearch: false,
+                showFilter: false,
+                filter: {
+                    status: 'all',
+                    priority: 'all'
+                },
+                statusOptions: [
+                    { label: '全部', value: 'all' },
+                    { label: '待办', value: 'todo' },
+                    { label: '已完成', value: 'completed' }
+                ],
+                priorityOptions: [
+                    { label: '全部', value: 'all' },
+                    { label: '高', value: 'high' },
+                    { label: '中', value: 'medium' },
+                    { label: '低', value: 'low' }
+                ]
+            },
+            computed: {
+                // 过滤后的任务列表
+                filteredTasks() {
+                    let result = this.tasks;
+
+                    // 搜索过滤
+                    if (this.searchQuery) {
+                        result = result.filter(task =>
+                            task.title.includes(this.searchQuery) ||
+                            (task.description && task.description.includes(this.searchQuery))
+                        );
+                    }
+
+                    // 状态过滤
+                    if (this.filter.status !== 'all') {
+                        result = result.filter(task => task.status === this.filter.status);
+                    }
+
+                    // 优先级过滤
+                    if (this.filter.priority !== 'all') {
+                        result = result.filter(task => task.priority === this.filter.priority);
+                    }
+
+                    return result;
+                },
+
+                // 任务统计
+                taskStats() {
+                    return {
+                        total: this.tasks.length,
+                        todo: this.tasks.filter(t => t.status === 'todo').length,
+                        completed: this.tasks.filter(t => t.status === 'completed').length
+                    };
+                }
+            },
+            methods: {
+                // 加载任务数据
+                loadTasks() {
+                    // 模拟数据
+                    this.tasks = [
+                        {
+                            id: 1,
+                            title: '完成产品原型设计',
+                            description: '根据 PRD 文档完成移动端原型设计，包括首页、列表页和详情页',
+                            category: '工作',
+                            priority: 'high',
+                            status: 'todo',
+                            dueDate: '2026-02-20',
+                            createdAt: '2026-02-19 10:00'
+                        },
+                        {
+                            id: 2,
+                            title: '团队周会',
+                            description: '讨论本周工作进度和下周计划',
+                            category: '工作',
+                            priority: 'medium',
+                            status: 'completed',
+                            dueDate: '2026-02-19',
+                            createdAt: '2026-02-18 09:00'
+                        },
+                        {
+                            id: 3,
+                            title: '学习 Vue.js',
+                            description: '完成 Vue 2 基础教程的学习',
+                            category: '学习',
+                            priority: 'low',
+                            status: 'todo',
+                            dueDate: '2026-02-25',
+                            createdAt: '2026-02-17 14:00'
+                        },
+                        {
+                            id: 4,
+                            title: '健身',
+                            description: '去健身房跑步30分钟',
+                            category: '生活',
+                            priority: 'medium',
+                            status: 'todo',
+                            dueDate: '2026-02-19',
+                            createdAt: '2026-02-19 08:00'
+                        }
+                    ];
+
+                    // 从 localStorage 读取
+                    const saved = localStorage.getItem('tasks');
+                    if (saved) {
+                        this.tasks = JSON.parse(saved);
+                    }
+                },
+
+                // 切换任务完成状态
+                toggleComplete(task) {
+                    task.status = task.status === 'completed' ? 'todo' : 'completed';
+                    this.saveTasks();
+                },
+
+                // 保存任务到 localStorage
+                saveTasks() {
+                    localStorage.setItem('tasks', JSON.stringify(this.tasks));
+                },
+
+                // 查看任务详情
+                viewTask(id) {
+                    // 实际项目中跳转到详情页
+                    alert(`查看任务 ${id}`);
+                    // window.location.href = `task-detail.html?id=${id}`;
+                },
+
+                // 添加新任务
+                addNewTask() {
+                    // 实际项目中跳转到添加任务页
+                    alert('跳转到添加任务页面');
+                    // window.location.href = 'add-task.html';
+                },
+
+                // 获取优先级标签
+                getPriorityLabel(priority) {
+                    const map = {
+                        high: '高优先级',
+                        medium: '中优先级',
+                        low: '低优先级'
+                    };
+                    return map[priority];
+                },
+
+                // 获取分类图标
+                getCategoryIcon(category) {
+                    const map = {
+                        '工作': 'fas fa-briefcase',
+                        '学习': 'fas fa-book',
+                        '生活': 'fas fa-heart'
+                    };
+                    return map[category] || 'fas fa-tag';
+                },
+
+                // 格式化日期
+                formatDate(dateStr) {
+                    if (!dateStr) return '';
+                    const date = new Date(dateStr);
+                    const today = new Date();
+                    const tomorrow = new Date(today);
+                    tomorrow.setDate(tomorrow.getDate() + 1);
+
+                    if (date.toDateString() === today.toDateString()) {
+                        return '今天';
+                    } else if (date.toDateString() === tomorrow.toDateString()) {
+                        return '明天';
+                    } else {
+                        return `${date.getMonth() + 1}月${date.getDate()}日`;
+                    }
+                },
+
+                // 格式化时间
+                formatTime(timeStr) {
+                    if (!timeStr) return '';
+                    return timeStr.split(' ')[1] || '';
+                }
+            },
+            mounted() {
+                this.loadTasks();
+            }
+        })
+    </script>
+</body>
+</html>
