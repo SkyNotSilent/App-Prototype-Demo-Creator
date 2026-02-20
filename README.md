@@ -1,12 +1,14 @@
-# Prototype Demo 2.0
+# App Prototype Demo Creator
 
-> 快速原型创建技能 - 优化增强版
+> 🚀 快速移动应用原型创建工具 - 让创意快速落地
 
 ---
 
-## 📌 版本说明
+## 📌 项目简介
 
-这是 Prototype Demo 技能的 2.0 版本，在原有基础上进行了全面优化和增强。
+**App Prototype Demo Creator** 是一个快速创建移动端 Web 原型的工具集。使用 HTML、Vue 2、Tailwind CSS 和 FontAwesome，无需构建步骤，即可快速搭建可交互的移动应用原型。
+
+**GitHub 仓库**: [https://github.com/SkyNotSilent/App-Prototype-Demo-Creator](https://github.com/SkyNotSilent/App-Prototype-Demo-Creator)
 
 ### ✨ 2.0 版本新增内容
 
@@ -38,8 +40,8 @@
 ## 📂 目录结构
 
 ```
-prototype-demo-2.0/
-├── SKILL-CN.md                    # 主技能文档（优化版）
+App-Prototype-Demo-Creator/
+├── SKILL-CN.md                    # 主技能文档（中文版）
 ├── README.md                      # 本说明文件
 │
 ├── examples/                      # 示例文件
