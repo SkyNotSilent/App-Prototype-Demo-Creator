@@ -1,9 +1,11 @@
 ---
-name: prototype-demo-cn
-description: 当用户想要创建快速原型、演示或 MVP Web 应用程序（特别是移动优先或简单的 Web 应用）时使用此技能,使用 HTML、Vue 2（本地）、Tailwind CSS（CDN）和 FontAwesome（CDN）而无需任何构建步骤。
+name: app-prototype-demo-creator
+description: 快速创建移动端 Web 原型和 MVP 应用，使用 HTML、Vue 2、Tailwind CSS，无需构建步骤。包含 PRD 文档、概览页面和独立页面模板。
 ---
 
-# 原型演示创建器 2.0
+# App Prototype Demo Creator
+
+> 🚀 快速移动应用原型创建工具
 
 ## 概述
 
